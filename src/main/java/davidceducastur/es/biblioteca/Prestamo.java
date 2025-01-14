@@ -15,13 +15,13 @@ public class Prestamo {
     private Libro libroPrest;
     private Usuario usuarioPrest;
     private LocalDate fechaPrest;
-    private LocalDate fechaDef;
+    private LocalDate fechaDev;
 
-    public Prestamo(Libro libroPrest, Usuario usuarioPrest, LocalDate fechaPrest, LocalDate fechaDef) {
+    public Prestamo(Libro libroPrest, Usuario usuarioPrest, LocalDate fechaPrest, LocalDate fechaDev) {
         this.libroPrest = libroPrest;
         this.usuarioPrest = usuarioPrest;
         this.fechaPrest = fechaPrest;
-        this.fechaDef = fechaDef;
+        this.fechaDev = fechaDev;
     }
 
     public Libro getLibroPrest() {
@@ -36,8 +36,8 @@ public class Prestamo {
         return fechaPrest;
     }
 
-    public LocalDate getFechaDef() {
-        return fechaDef;
+    public LocalDate getFechaDev() {
+        return fechaDev;
     }
 
     public void setLibroPrest(Libro libroPrest) {
@@ -52,13 +52,13 @@ public class Prestamo {
         this.fechaPrest = fechaPrest;
     }
 
-    public void setFechaDef(LocalDate fechaDef) {
-        this.fechaDef = fechaDef;
+    public void setFechaDev(LocalDate fechaDev) {
+        this.fechaDev = fechaDev;
     }
 
     @Override
     public String toString() {
-        return libroPrest + "-" + usuarioPrest + "-" + fechaPrest + "-" + fechaDef;
+        return libroPrest + "-" + usuarioPrest + "-" + fechaPrest + "-" + fechaDev;
     }
         
 }

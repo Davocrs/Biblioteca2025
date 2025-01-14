@@ -67,6 +67,4 @@ public class Libro {
     public String toString() {
         return isbn + "-" + titulo + "-" + autor + "-" + genero + "-" + ejemplares;
     }
-    
-    
 }
