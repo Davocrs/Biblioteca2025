@@ -161,9 +161,7 @@ public class Biblioteca2025 {
                 case 7:
                     LibroMasLeido();
                     break;
-                case 8:
-                    UsuarioMasLector();
-                    break;
+               
             }
         } while (opcion != 9);
     }
@@ -482,10 +480,7 @@ public class Biblioteca2025 {
             }
         }
     }
-    
-    private void UsuarioMasLector() {
-
-    }
+   
     
     //</editor-fold>
     
