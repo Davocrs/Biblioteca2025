@@ -10,7 +10,7 @@ package davidceducastur.es.biblioteca;
  */
 public class MetodosAux {
     
-        public static boolean esInt (String s){
+    public static boolean esInt (String s){
         
         int n;
         try {
