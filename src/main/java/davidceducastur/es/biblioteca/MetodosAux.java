@@ -10,4 +10,25 @@ package davidceducastur.es.biblioteca;
  */
 public class MetodosAux {
     
+        public static boolean esInt (String s){
+        
+        int n;
+        try {
+            n=Integer.parseInt(s);
+            return true;        
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+    }
+    
+    public static boolean esDouble (String s) {
+        double n;
+        try {
+            n = Double.parseDouble(s);
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
+        } 
+    }
+    
 }
