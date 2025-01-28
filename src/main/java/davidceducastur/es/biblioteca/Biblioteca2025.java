@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * @author alu03d
+ * @author David
  */
 public class Biblioteca2025 {
 
@@ -562,7 +562,5 @@ public class Biblioteca2025 {
     }
     
     //</editor-fold>
-
-    
     
 }
