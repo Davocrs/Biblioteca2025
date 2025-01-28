@@ -560,6 +560,9 @@ public class Biblioteca2025 {
         String isbn = sc.nextLine();
         return isbn;
     }
+
+    System.out.println("Esto esta editado por dani");
+
     
     //</editor-fold>
     
