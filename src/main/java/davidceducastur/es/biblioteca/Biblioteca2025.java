@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 /**
  * @author David
+ *Editado por Daniel Perez
  */
 public class Biblioteca2025 {
 
@@ -560,8 +561,6 @@ public class Biblioteca2025 {
         String isbn = sc.nextLine();
         return isbn;
     }
-
-    System.out.println("Esto esta editado por dani");
 
     
     //</editor-fold>
