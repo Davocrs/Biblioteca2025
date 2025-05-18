@@ -4,13 +4,14 @@
  */
 package davidceducastur.es.biblioteca;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
  * Clase Prestamos para la Biblioteca2025
  * @author alu03d
  */
-public class Prestamo {
+public class Prestamo implements Serializable{
     
     private Libro libroPrest;
     private Usuario usuarioPrest;

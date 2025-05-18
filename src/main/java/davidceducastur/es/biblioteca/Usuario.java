@@ -4,11 +4,13 @@
  */
 package davidceducastur.es.biblioteca;
 
+import java.io.Serializable;
+
 /**
  * Clase Usuarios para la Biblioteca2025
  * @author alu03d
  */
-public class Usuario {
+public class Usuario implements Serializable{
     
     private String dni;
     private String nombre;

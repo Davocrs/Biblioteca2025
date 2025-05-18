@@ -4,11 +4,13 @@
  */
 package davidceducastur.es.biblioteca;
 
+import java.io.Serializable;
+
 /**
  * Clase Libros para la Biblioteca2025
  * @author alu03d
  */
-public class Libro {
+public class Libro implements Serializable{
     private String isbn;
     private String titulo;
     private String autor;

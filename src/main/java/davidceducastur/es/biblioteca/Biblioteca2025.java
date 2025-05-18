@@ -7,6 +7,15 @@ package davidceducastur.es.biblioteca;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.BufferedWriter;
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 /**
  * @author David
@@ -563,4 +572,130 @@ public class Biblioteca2025 {
     
     //</editor-fold>
     
+    
+    // Pida el DNI de un usuario y muestre todos los préstamos asociados a ese usuario.
+    public static void mostrarPrestamosDeUsuario(ArrayList<Prestamo> prestamos, String dni) {
+    for (Prestamo p : prestamos) {
+        if (p.getUsuarioPrest().getDni().equalsIgnoreCase(dni)) {
+            System.out.println(p);
+        }
+    }
+}
+    
+    // Listar libros mas prestados
+    public static void librosMasPrestados(ArrayList<Libro> libros, ArrayList<Prestamo> prestamos) {
+    for (Libro l : libros) {
+        int contador = 0;
+        for (Prestamo p : prestamos) {
+            if (p.getLibroPrest().equals(l)) {
+                contador++;
+            }
+        }
+        System.out.println(l.getTitulo() + " - Veces prestado: " + contador);
+    }
+    }
+    
+    // Libros que estan prestados actualmente
+    public static void mostrarLibrosSinEjemplares(ArrayList<Libro> libros) {
+    for (Libro l : libros) {
+        if (l.getEjemplares() == 0) {
+            System.out.println(l.getTitulo());
+        }
+    }
+    }
+    
+    // Mostrar los prestamos atrasados y los dias
+    public static void mostrarPrestamosAtrasados(ArrayList<Prestamo> prestamos) {
+    java.time.LocalDate hoy = java.time.LocalDate.now();
+    for (Prestamo p : prestamos) {
+        if (p.getFechaDev().isBefore(hoy)) {
+            System.out.println("Préstamo: " + p + " | Días de retraso: " + 
+                java.time.temporal.ChronoUnit.DAYS.between(p.getFechaDev(), hoy));
+        }
+    }
+    }
+    
+    // Prestamos que estan pendientes de devolver
+    public static void mostrarPrestamosPendientes(ArrayList<Prestamo> prestamos) {
+    java.time.LocalDate hoy = java.time.LocalDate.now();
+    for (Prestamo p : prestamos) {
+        if (!p.getFechaDev().isBefore(hoy)) { // fechaDev es hoy o posterior
+            System.out.println(p);
+        }
+    }
+    }
+    
+    // Buckup 
+    public static void backup(ArrayList<Libro> libros, ArrayList<Usuario> usuarios, ArrayList<Prestamo> prestamos) {
+    try (ObjectOutputStream oosLibros = new ObjectOutputStream(new FileOutputStream("libros.dat"));
+         ObjectOutputStream oosUsuarios = new ObjectOutputStream(new FileOutputStream("usuarios.dat"));
+         ObjectOutputStream oosPrestamos = new ObjectOutputStream(new FileOutputStream("prestamos.dat"))) 
+    {
+        for (Libro l : libros) {
+            oosLibros.writeObject(l);
+        }
+        for (Usuario u : usuarios) {
+            oosUsuarios.writeObject(u);
+        }
+        for (Prestamo p : prestamos) {
+            oosPrestamos.writeObject(p);
+        }
+        System.out.println("Copia de seguridad realizada con éxito.");
+    } catch (FileNotFoundException e) {
+        System.out.println(e.toString());
+    } catch (IOException e) {
+        System.out.println(e.toString());
+    }
+    }
+    
+    // Leer
+    public static void leerArchivos(ArrayList<Libro> libros, ArrayList<Usuario> usuarios, ArrayList<Prestamo> prestamos) {
+    // Leer libros
+    try (ObjectInputStream oisLibros = new ObjectInputStream(new FileInputStream("libros.dat"))) {
+        while (true) {
+            Libro l = (Libro) oisLibros.readObject();
+            libros.add(l);
+        }
+    } catch (FileNotFoundException e) {
+        System.out.println(e.toString());
+    } catch (EOFException e) {
+        // Fin de archivo, no pasa nada
+    } catch (ClassNotFoundException | IOException e) {
+        System.out.println(e.toString());
+    }
+
+    // Leer usuarios
+    try (ObjectInputStream oisUsuarios = new ObjectInputStream(new FileInputStream("usuarios.dat"))) {
+        while (true) {
+            Usuario u = (Usuario) oisUsuarios.readObject();
+            usuarios.add(u);
+        }
+    } catch (FileNotFoundException e) {
+
+    } catch (EOFException e) {
+
+    } catch (ClassNotFoundException | IOException e) {
+
+    }
+
+    // Leer préstamos
+    try (ObjectInputStream oisPrestamos = new ObjectInputStream(new FileInputStream("prestamos.dat"))) {
+        while (true) {
+            Prestamo p = (Prestamo) oisPrestamos.readObject();
+            prestamos.add(p);
+        }
+    } catch (FileNotFoundException e) {
+
+    } catch (EOFException e) {
+
+    } catch (ClassNotFoundException | IOException e) {
+
+    }
+    }
+
+
+
+
+
+
 }
