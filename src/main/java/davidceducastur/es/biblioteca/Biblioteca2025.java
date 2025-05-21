@@ -580,7 +580,7 @@ public class Biblioteca2025 {
             System.out.println(p);
         }
     }
-}
+    }
     
     // Listar libros mas prestados
     public static void librosMasPrestados(ArrayList<Libro> libros, ArrayList<Prestamo> prestamos) {
@@ -617,7 +617,7 @@ public class Biblioteca2025 {
     
     // Prestamos que estan pendientes de devolver
     public static void mostrarPrestamosPendientes(ArrayList<Prestamo> prestamos) {
-    java.time.LocalDate hoy = java.time.LocalDate.now();
+    LocalDate hoy = LocalDate.now();
     for (Prestamo p : prestamos) {
         if (!p.getFechaDev().isBefore(hoy)) { // fechaDev es hoy o posterior
             System.out.println(p);
@@ -625,77 +625,109 @@ public class Biblioteca2025 {
     }
     }
     
-    // Buckup 
-    public static void backup(ArrayList<Libro> libros, ArrayList<Usuario> usuarios, ArrayList<Prestamo> prestamos) {
-    try (ObjectOutputStream oosLibros = new ObjectOutputStream(new FileOutputStream("libros.dat"));
-         ObjectOutputStream oosUsuarios = new ObjectOutputStream(new FileOutputStream("usuarios.dat"));
-         ObjectOutputStream oosPrestamos = new ObjectOutputStream(new FileOutputStream("prestamos.dat"))) 
-    {
-        for (Libro l : libros) {
-            oosLibros.writeObject(l);
+    //<editor-fold defaultstate="collapsed" desc="REPASAR">
+    
+    public void resumenPrestamosPorAño(int año) {
+    int total = 0;
+
+    System.out.println("Resumen de préstamos en el año " + año + ":");
+
+    for (Usuario u : usuarios) {
+        int contador = 0;
+        for (Prestamo p : prestamosHist) {
+            if (p.getUsuarioPrest().getDni().equals(u.getDni()) &&
+                p.getFechaPrest().getYear() == año) {
+                contador++;
+                total++;
+            }
         }
-        for (Usuario u : usuarios) {
-            oosUsuarios.writeObject(u);
+        if (contador > 0) {
+            System.out.println("- " + u.getNombre() + ": " + contador + " préstamo(s)");
         }
-        for (Prestamo p : prestamos) {
-            oosPrestamos.writeObject(p);
-        }
-        System.out.println("Copia de seguridad realizada con éxito.");
-    } catch (FileNotFoundException e) {
-        System.out.println(e.toString());
-    } catch (IOException e) {
-        System.out.println(e.toString());
     }
+
+    System.out.println("TOTAL DE PRÉSTAMOS EN " + año + ": " + total);
+    }   
+    
+    public void usuariosConMasDe2Prestamos() {
+        for (Usuario u : usuarios) {
+            int contador = 0;
+            for (Prestamo p : prestamosHist) {
+                if (p.getUsuarioPrest().getDni().equals(u.getDni())) {
+                    contador++;
+                }
+            }
+            if (contador > 2) {
+                System.out.println(u.getNombre() + " - " + contador + " préstamos");
+            }
+        }
     }
     
-    // Leer
-    public static void leerArchivos(ArrayList<Libro> libros, ArrayList<Usuario> usuarios, ArrayList<Prestamo> prestamos) {
-    // Leer libros
-    try (ObjectInputStream oisLibros = new ObjectInputStream(new FileInputStream("libros.dat"))) {
-        while (true) {
-            Libro l = (Libro) oisLibros.readObject();
-            libros.add(l);
+    public void librosFrecuentes() {
+        for (Libro l : libros) {
+            int contador = 0;
+            for (Prestamo p : prestamosHist) {
+                if (p.getLibroPrest().getIsbn().equals(l.getIsbn())) {
+                    contador++;
+                }
+            }
+            if (contador > 1) {
+                System.out.println(l.getTitulo() + " - Prestado " + contador + " veces");
+            }
         }
-    } catch (FileNotFoundException e) {
-        System.out.println(e.toString());
-    } catch (EOFException e) {
-        // Fin de archivo, no pasa nada
-    } catch (ClassNotFoundException | IOException e) {
-        System.out.println(e.toString());
     }
+    
+    
+    public void librosPrestadosEnMes() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Introduce el número del mes (1-12): ");
+        int mes = sc.nextInt();
 
-    // Leer usuarios
-    try (ObjectInputStream oisUsuarios = new ObjectInputStream(new FileInputStream("usuarios.dat"))) {
-        while (true) {
-            Usuario u = (Usuario) oisUsuarios.readObject();
-            usuarios.add(u);
+        for (Prestamo p : prestamosHist) {
+            if (p.getFechaPrest().getMonthValue() == mes) {
+                System.out.println(p.getLibroPrest());
+            }
         }
-    } catch (FileNotFoundException e) {
-
-    } catch (EOFException e) {
-
-    } catch (ClassNotFoundException | IOException e) {
-
     }
+    
+    public void usuariosPorLetra() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Introduce una letra: ");
+        char letra = sc.nextLine().toUpperCase().charAt(0);
 
-    // Leer préstamos
-    try (ObjectInputStream oisPrestamos = new ObjectInputStream(new FileInputStream("prestamos.dat"))) {
-        while (true) {
-            Prestamo p = (Prestamo) oisPrestamos.readObject();
-            prestamos.add(p);
+        for (Usuario u : usuarios) {
+            if (u.getNombre().toUpperCase().charAt(0) == letra) {
+                System.out.println(u);
+            }
         }
-    } catch (FileNotFoundException e) {
-
-    } catch (EOFException e) {
-
-    } catch (ClassNotFoundException | IOException e) {
-
     }
+    
+    public void librosNuncaPrestados() {
+    for (Libro l : libros) {
+        boolean prestado = false;
+
+        for (Prestamo p : prestamos) {
+            if (p.getLibroPrest().getIsbn().equals(l.getIsbn())) {
+                prestado = true;
+                break;
+            }
+        }
+        if (!prestado) {
+            for (Prestamo p : prestamosHist) {
+                if (p.getLibroPrest().getIsbn().equals(l.getIsbn())) {
+                    prestado = true;
+                    break;
+                }
+            }
+        }
+
+        if (!prestado) {
+            System.out.println(l);
+        }
     }
+}
 
-
-
-
-
-
+    
+//</editor-fold>
+    
 }
