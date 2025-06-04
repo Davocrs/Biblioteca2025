@@ -148,19 +148,47 @@ public class PracticaBiblioteca {
     
     public void prestamosPorAño() {
         
+        int contador = 0;
+                
         System.out.println("Prestamos año: 2023");
         
+        for (Prestamo p : prestamosHist) {
+            if (p.getFechaPrest().getYear() == 2023){
+                System.out.println(p.getLibroPrest());
+            }
+            contador++;
+        }
         
+        System.out.println("El total de prestamos en 2023 es: " + contador);
+        
+        System.out.println("");
         
         System.out.println("Prestamos año: 2024");
         
+        for (Prestamo p : prestamosHist) {
+            if (p.getFechaPrest().getYear() == 2024){
+                System.out.println(p.getLibroPrest());
+            }
+            contador++;
+        }
         
+        System.out.println("El total de prestamos en 2024 es: " + contador);
+        
+        System.out.println("");
         
         System.out.println("Prestamos año: 2025");
         
+        for (Prestamo p : prestamosHist) {
+            if (p.getFechaPrest().getYear() == 2025){
+                System.out.println(p.getLibroPrest());
+            }
+            contador++;
+        }
+        
+        System.out.println("El total de prestamos en 2025 es: " + contador);
+        
     }
 
-    
     public int buscaDni(String dni){
         int pos=-1;
         for (int i = 0; i < usuarios.size(); i++) {

@@ -7,15 +7,6 @@ package davidceducastur.es.biblioteca;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.BufferedWriter;
-import java.io.EOFException;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.util.Comparator;
 
 /**
@@ -587,8 +578,7 @@ public class Biblioteca2025 {
         return isbn;
     }
     
-    //</editor-fold>
-    
+    //</editor-fold>  
     
     // Pida el DNI de un usuario y muestre todos los préstamos asociados a ese usuario.
     public static void mostrarPrestamosDeUsuario(ArrayList<Prestamo> prestamos, String dni) {
